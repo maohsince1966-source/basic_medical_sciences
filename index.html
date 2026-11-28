@@ -6,12 +6,22 @@
   <title>OT基礎医学 3分学習ポータル</title>
   <style>
     :root {
+      /* ベースカラー（清潔感ある白＋スレート） */
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-sub: #334155;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      /* プライマリ */
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
       --primary-light: #eff6ff;
       --primary-border: #bfdbfe;
 
-      /* 科目別アクセントカラー */
+      /* カテゴリ別アクセントカラー */
       --anatomy: #2563eb;
       --anatomy-bg: #eff6ff;
       --anatomy-border: #bfdbfe;
@@ -20,22 +30,19 @@
       --physiology-bg: #ecfdf5;
       --physiology-border: #a7f3d0;
 
-      --kinesiology: #ea580c;
-      --kinesiology-bg: #fff7ed;
-      --kinesiology-border: #fed7aa;
+      --kinesiology: #d97706;
+      --kinesiology-bg: #fffbeb;
+      --kinesiology-border: #fde68a;
 
-      /* ゴールド系（国試過去問バッジ・お気に入り） */
+      /* ゴールド（国試バッジ・お気に入り） */
       --gold: #b45309;
       --gold-bg: #fef3c7;
-      --gold-border: #fcd34d;
-      --star: #f59e0b;
+      --gold-border: #f59e0b;
 
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --border-strong: #cbd5e1;
+      /* NEWバッジ（赤系） */
+      --new-text: #dc2626;
+      --new-bg: #fef2f2;
+      --new-border: #fca5a5;
     }
 
     * {
@@ -56,99 +63,140 @@
       max-width: 600px;
       margin: 0 auto;
       min-height: 100vh;
-      padding: 16px 16px 32px;
+      padding: 16px 14px 28px;
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
     /* ==========================================
-       ヘッダー
+       ヘッダー＆ミニ統計バー
        ========================================== */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding-bottom: 4px;
-    }
-
-    .brand {
+    .hero-header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
       display: flex;
       flex-direction: column;
-      min-width: 0;
+      gap: 12px;
     }
 
-    h1 {
-      font-size: 1.2rem;
-      font-weight: 900;
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand-title {
       margin: 0;
+      font-size: 1.22rem;
+      font-weight: 900;
       color: var(--primary);
       letter-spacing: -0.02em;
       line-height: 1.25;
     }
 
     .brand-sub {
-      font-size: 0.72rem;
+      margin: 2px 0 0;
+      font-size: 0.74rem;
+      font-weight: 700;
       color: var(--muted);
-      font-weight: 600;
-      margin-top: 2px;
     }
 
-    .guide-btn {
-      background: var(--card);
-      border: 1px solid var(--border-strong);
-      border-radius: 20px;
-      padding: 7px 12px;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: var(--text);
-      cursor: pointer;
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 8px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2px;
+    }
+
+    .stat-item:not(:last-child) {
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-label {
+      font-size: 0.67rem;
+      font-weight: 700;
+      color: var(--muted);
       white-space: nowrap;
-      flex-shrink: 0;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
-      transition: background-color 0.15s, transform 0.1s;
     }
 
-    .guide-btn:active {
-      background: #f1f5f9;
-      transform: scale(0.97);
+    .stat-value {
+      font-size: 0.96rem;
+      font-weight: 900;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-value.highlight-gold {
+      color: var(--gold);
+    }
+
+    .stat-value.highlight-blue {
+      color: var(--primary);
     }
 
     /* ==========================================
-       クイックアクションバー
+       便利ボタン（ランダムおすすめ・ホーム追加）
        ========================================== */
-    .quick-bar {
-      display: flex;
-      gap: 10px;
-      align-items: stretch;
+    .utility-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
 
-    .random-btn {
-      flex: 1;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: 14px;
-      padding: 13px 16px;
-      font-size: 0.92rem;
+    .util-btn {
+      border-radius: 12px;
+      padding: 12px 10px;
+      font-size: 0.82rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
-      transition: transform 0.12s, box-shadow 0.15s;
+      gap: 6px;
+      transition: transform 0.1s, box-shadow 0.15s, background-color 0.15s;
+      white-space: nowrap;
     }
 
-    .random-btn:active {
-      transform: scale(0.98);
-      box-shadow: 0 1px 4px rgba(37, 99, 235, 0.2);
+    .util-btn:active {
+      transform: scale(0.97);
+    }
+
+    .util-btn.primary {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.24);
+    }
+
+    .util-btn.secondary {
+      background: var(--card);
+      color: var(--text);
+      border: 1.5px solid var(--border-strong);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .util-btn.secondary:active {
+      background: #f1f5f9;
     }
 
     /* ==========================================
-       検索バー & 科目フィルタタブ
+       検索バー＆フィルタチップ
        ========================================== */
     .search-wrap {
       position: relative;
@@ -159,7 +207,7 @@
       left: 13px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       pointer-events: none;
       opacity: 0.7;
     }
@@ -168,7 +216,7 @@
       width: 100%;
       padding: 11px 14px 11px 38px;
       border-radius: 12px;
-      border: 1px solid var(--border-strong);
+      border: 1.5px solid var(--border-strong);
       background: var(--card);
       font-size: 0.88rem;
       font-family: inherit;
@@ -182,7 +230,7 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     }
 
-    .filter-tabs {
+    .filter-chips {
       display: flex;
       gap: 6px;
       overflow-x: auto;
@@ -191,16 +239,16 @@
       -ms-overflow-style: none;
     }
 
-    .filter-tabs::-webkit-scrollbar {
+    .filter-chips::-webkit-scrollbar {
       display: none;
     }
 
-    .filter-tab {
+    .filter-chip {
       background: var(--card);
       border: 1px solid var(--border-strong);
       border-radius: 20px;
       padding: 7px 12px;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 800;
       color: var(--muted);
       cursor: pointer;
@@ -212,24 +260,30 @@
       flex-shrink: 0;
     }
 
-    .filter-tab .count-badge {
+    .filter-chip .chip-count {
       background: #f1f5f9;
       color: var(--muted);
       font-size: 0.68rem;
       font-weight: 800;
       padding: 1px 6px;
       border-radius: 10px;
+      font-variant-numeric: tabular-nums;
     }
 
-    .filter-tab.active {
+    .filter-chip.active {
       background: var(--primary);
       border-color: var(--primary);
       color: #ffffff;
     }
 
-    .filter-tab.active .count-badge {
-      background: rgba(255, 255, 255, 0.24);
+    .filter-chip.active .chip-count {
+      background: rgba(255, 255, 255, 0.25);
       color: #ffffff;
+    }
+
+    .filter-chip.chip-kokushi.active {
+      background: var(--gold);
+      border-color: var(--gold);
     }
 
     /* ==========================================
@@ -244,20 +298,20 @@
 
     .app-card {
       background: var(--card);
-      border-radius: 14px;
+      border-radius: 15px;
       border: 1px solid var(--border);
       border-left-width: 5px;
       padding: 14px 15px;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
       display: flex;
       flex-direction: column;
       gap: 9px;
-      transition: transform 0.12s, box-shadow 0.15s, border-color 0.15s;
+      transition: transform 0.12s, box-shadow 0.15s;
     }
 
-    .app-card.subject-anatomy { border-left-color: var(--anatomy); }
-    .app-card.subject-physiology { border-left-color: var(--physiology); }
-    .app-card.subject-kinesiology { border-left-color: var(--kinesiology); }
+    .app-card.cat-anatomy { border-left-color: var(--anatomy); }
+    .app-card.cat-physiology { border-left-color: var(--physiology); }
+    .app-card.cat-kinesiology { border-left-color: var(--kinesiology); }
 
     .app-card.highlight-pulse {
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35), 0 8px 20px rgba(37, 99, 235, 0.15);
@@ -267,7 +321,7 @@
     .card-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 8px;
     }
 
@@ -278,29 +332,40 @@
       flex-wrap: wrap;
     }
 
-    .subject-badge {
+    .cat-badge {
       font-size: 0.7rem;
       font-weight: 800;
       padding: 2px 9px;
       border-radius: 20px;
     }
 
-    .subject-badge.anatomy {
+    .cat-badge.anatomy {
       background: var(--anatomy-bg);
       color: var(--anatomy);
       border: 1px solid var(--anatomy-border);
     }
 
-    .subject-badge.physiology {
+    .cat-badge.physiology {
       background: var(--physiology-bg);
       color: var(--physiology);
       border: 1px solid var(--physiology-border);
     }
 
-    .subject-badge.kinesiology {
+    .cat-badge.kinesiology {
       background: var(--kinesiology-bg);
       color: var(--kinesiology);
       border: 1px solid var(--kinesiology-border);
+    }
+
+    .new-badge {
+      font-size: 0.68rem;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--new-bg);
+      color: var(--new-text);
+      border: 1px solid var(--new-border);
+      letter-spacing: 0.04em;
     }
 
     .kokushi-badge {
@@ -318,7 +383,7 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 4px 10px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--muted);
       cursor: pointer;
@@ -359,11 +424,11 @@
       line-height: 1.3;
     }
 
-    .app-subtitle {
+    .app-desc {
       font-size: 0.81rem;
-      color: var(--muted);
+      color: var(--text-sub);
       margin: 0;
-      line-height: 1.48;
+      line-height: 1.5;
     }
 
     .tag-row {
@@ -372,7 +437,7 @@
       gap: 5px;
     }
 
-    .mode-tag {
+    .tag-pill {
       font-size: 0.7rem;
       font-weight: 700;
       background: #f1f5f9;
@@ -386,29 +451,29 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      padding-top: 8px;
+      padding-top: 9px;
       border-top: 1px solid #f1f5f9;
       margin-top: 2px;
     }
 
-    .study-stat {
+    .history-text {
       font-size: 0.74rem;
       font-weight: 700;
       color: var(--muted);
       font-variant-numeric: tabular-nums;
     }
 
-    .study-stat.has-history {
+    .history-text.studied {
       color: var(--primary-dark);
     }
 
-    .open-btn {
+    .action-btn {
       background: var(--primary);
       color: #ffffff;
       border: none;
       border-radius: 10px;
-      padding: 9px 18px;
-      font-size: 0.84rem;
+      padding: 9px 16px;
+      font-size: 0.83rem;
       font-weight: 800;
       cursor: pointer;
       display: inline-flex;
@@ -418,78 +483,53 @@
       flex-shrink: 0;
     }
 
-    .open-btn:active {
+    .action-btn:active:not(:disabled) {
       transform: scale(0.96);
       background: var(--primary-dark);
     }
 
-    .open-btn.pending {
+    .action-btn:disabled {
       background: #e2e8f0;
-      color: #475569;
-    }
-
-    .open-btn.pending:active {
-      background: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
     }
 
     .empty-state {
       background: var(--card);
-      border: 1px dashed var(--border-strong);
+      border: 1.5px dashed var(--border-strong);
       border-radius: 14px;
       padding: 32px 16px;
       text-align: center;
       color: var(--muted);
       font-size: 0.86rem;
       font-weight: 700;
+      line-height: 1.6;
     }
 
     /* ==========================================
        フッター
        ========================================== */
-    footer {
-      margin-top: 10px;
+    .portal-note {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
+      border-radius: 12px;
+      padding: 12px 14px;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .footer-stats {
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .footer-stats span strong {
-      color: var(--primary);
-    }
-
-    .footer-roadmap {
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--gold);
-      background: var(--gold-bg);
-      border: 1px solid var(--gold-border);
-      border-radius: 10px;
-      padding: 8px 10px;
-      line-height: 1.45;
-    }
-
-    .footer-note {
-      font-size: 0.7rem;
+      font-size: 0.74rem;
       color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .copyright-footer {
+      text-align: center;
+      padding: 12px 12px 8px;
+      color: #64748b;
+      font-size: 12px;
+      letter-spacing: 0.03em;
     }
 
     /* ==========================================
-       モーダル（ホーム追加ガイド・おすすめダイアログ）
+       モーダル（おすすめ提案・ホーム画面追加ガイド）
        ========================================== */
     .modal-backdrop {
       position: fixed;
@@ -528,7 +568,7 @@
     }
 
     .modal-title {
-      font-size: 1.02rem;
+      font-size: 1.04rem;
       font-weight: 900;
       margin: 0;
       color: var(--text);
@@ -538,8 +578,8 @@
       background: #f1f5f9;
       border: none;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       font-size: 1rem;
       font-weight: 800;
       color: var(--muted);
@@ -571,14 +611,14 @@
       gap: 4px;
     }
 
-    .rec-card-preview {
+    .rec-preview {
       background: var(--primary-light);
       border: 2px solid var(--primary-border);
       border-radius: 14px;
       padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
     }
 
     .modal-actions {
@@ -594,9 +634,15 @@
       border: none;
       border-radius: 10px;
       padding: 12px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .modal-btn-primary:disabled {
+      background: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
     }
 
     .modal-btn-secondary {
@@ -605,7 +651,7 @@
       border: 1px solid var(--border-strong);
       border-radius: 10px;
       padding: 12px 14px;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
     }
@@ -618,7 +664,7 @@
       left: 50%;
       bottom: 24px;
       transform: translateX(-50%) translateY(16px);
-      background: #1e293b;
+      background: #0f172a;
       color: #ffffff;
       padding: 11px 18px;
       border-radius: 12px;
@@ -641,19 +687,37 @@
 </head>
 <body>
   <div class="container">
-    <!-- ヘッダー -->
-    <header>
-      <div class="brand">
-        <h1>OT基礎医学 3分学習ポータル</h1>
-        <span class="brand-sub">作業療法学科 1・2年次 基礎科目スマホ学習</span>
+    <!-- ヘッダー＆ミニ統計バー -->
+    <header class="hero-header">
+      <div class="brand-row">
+        <div>
+          <h1 class="brand-title">OT基礎医学 3分学習ポータル</h1>
+          <p class="brand-sub">作業療法学科 1・2年次 基礎科目スマホ学習シリーズ</p>
+        </div>
       </div>
-      <button id="openGuideBtn" class="guide-btn" type="button">📱 ホーム追加ガイド</button>
+      <div class="stats-bar" aria-label="学習統計">
+        <div class="stat-item">
+          <span class="stat-label">収録アプリ</span>
+          <span id="statTotalApps" class="stat-value">全0アプリ</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">国試過去問対応</span>
+          <span id="statKokushiApps" class="stat-value highlight-gold">0本</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">あなたの累計学習</span>
+          <span id="statTotalSessions" class="stat-value highlight-blue">0回</span>
+        </div>
+      </div>
     </header>
 
-    <!-- クイックアクションバー -->
-    <div class="quick-bar">
-      <button id="randomPickBtn" class="random-btn" type="button">
-        <span>🎲 今日の3分おすすめ（ランダム1本）</span>
+    <!-- 便利ボタン2つ -->
+    <div class="utility-grid">
+      <button id="randomPickBtn" class="util-btn primary" type="button">
+        <span>🎲 今日の3分おすすめ</span>
+      </button>
+      <button id="openGuideBtn" class="util-btn secondary" type="button">
+        <span>📱 ホーム画面に追加</span>
       </button>
     </div>
 
@@ -664,33 +728,42 @@
         id="searchInput"
         class="search-input"
         type="search"
-        placeholder="アプリ名・説明・モードで検索（例：歩行、パズル、ホルモン）"
+        placeholder="アプリ名・説明・タグで検索（例：デルマトーム、歩行、55筋）"
         autocomplete="off"
       >
     </div>
 
-    <!-- 科目フィルタタブ -->
-    <nav id="filterTabs" class="filter-tabs" aria-label="科目フィルタ"></nav>
+    <!-- フィルタチップ -->
+    <nav id="filterChips" class="filter-chips" aria-label="アプリ絞り込み"></nav>
 
     <!-- アプリカード一覧 -->
     <main id="appList" class="app-list"></main>
 
+    <!-- 補足案内 -->
+    <div class="portal-note">
+      ※ お気に入り・学習回数・最終学習日はお使いのスマホ／PCのブラウザ内に自動保存されます（ログイン不要）。
+    </div>
+
     <!-- フッター -->
-    <footer>
-      <div class="footer-stats">
-        <span>収録アプリ：<strong id="totalAppsCount">0</strong>本</span>
-        <span>あなたの累計学習：<strong id="totalStudyCount">0</strong>回</span>
-      </div>
-      <div class="footer-roadmap">
-        🎓 今後、各アプリに「国家試験過去問に挑戦」モードを順次追加予定！
-      </div>
-      <div class="footer-note">
-        ※ 学習回数・お気に入りはこの端末のブラウザ内に自動保存されます（ログイン不要）
-      </div>
-    </footer>
+    <footer class="copyright-footer">&copy;Created by Shunsuke Usui</footer>
   </div>
 
-  <!-- モーダル①：ホーム画面追加ガイド -->
+  <!-- モーダル①：今日の3分おすすめ（ランダム選出） -->
+  <div id="recommendModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="recModalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="recModalTitle" class="modal-title">🎲 今日の3分おすすめ！</h2>
+        <button class="modal-close" type="button" data-close-modal="recommendModal" aria-label="閉じる">✕</button>
+      </div>
+      <div id="recPreview" class="rec-preview"></div>
+      <div class="modal-actions">
+        <button id="recRerollBtn" class="modal-btn-secondary" type="button">🔄 もう1回引く</button>
+        <button id="recOpenBtn" class="modal-btn-primary" type="button">すぐ開く ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル②：ホーム画面に追加ガイド -->
   <div id="guideModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
     <div class="modal-box">
       <div class="modal-header">
@@ -698,7 +771,7 @@
         <button class="modal-close" type="button" data-close-modal="guideModal" aria-label="閉じる">✕</button>
       </div>
       <p style="margin:0; font-size:0.82rem; color:var(--muted);">
-        ホーム画面に追加しておくと、普通のアプリと同じように1タップで開けて便利です。
+        ホーム画面にアイコンを追加しておくと、普通のスマホアプリと同じように1タップで開けて通学中の復習に便利です。
       </p>
       <div class="guide-section">
         <h3>🍎 iPhone（Safari）の場合</h3>
@@ -720,200 +793,208 @@
     </div>
   </div>
 
-  <!-- モーダル②：今日の3分おすすめ（ランダム選出） -->
-  <div id="recommendModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="recModalTitle">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h2 id="recModalTitle" class="modal-title">🎲 今日の3分おすすめ！</h2>
-        <button class="modal-close" type="button" data-close-modal="recommendModal" aria-label="閉じる">✕</button>
-      </div>
-      <div id="recPreview" class="rec-card-preview"></div>
-      <div class="modal-actions">
-        <button id="recRerollBtn" class="modal-btn-secondary" type="button">🔄 引き直す</button>
-        <button id="recOpenBtn" class="modal-btn-primary" type="button">このアプリを開く ▶</button>
-      </div>
-    </div>
-  </div>
-
   <!-- トースト通知 -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
     /**
      * =========================================================================
-     * 収録アプリ一覧（マスターデータ）
+     * 収録アプリ一覧（全9本）一元管理配列
      * -------------------------------------------------------------------------
-     * 新しいアプリを追加するときは、この配列の末尾にオブジェクトを1つ足すだけで
-     * 画面・件数・科目フィルタ・検索・ランダム選出に自動反映されます。
+     * ・各アプリの公開URLを設定するときは url: "https://..." に書き換えてください。
+     * ・国試過去問モードを追加したら hasKokushi: true と kokushiCount を設定します。
+     * ・新しいアプリを増やす際は、末尾のテンプレートをコピーして追加してください。
      * =========================================================================
      */
     const APPS = [
       {
         id: "muscle-matching",
-        subject: "解剖学",
+        title: "筋マッチング（主要55筋）",
+        category: "anatomy",
         icon: "💪",
-        title: "解剖学 筋マッチング（全55筋）",
-        subtitle: "上肢・下肢・体幹・手の内在筋。支配神経・作用・起始停止を攻略。",
-        tags: ["マッチング", "弱点復習"],
+        description: "主要55筋の起始・停止・支配神経・作用をスピードマッチングと3つ集めチャレンジで特訓。",
+        tags: ["主要55筋", "支配神経", "起始・停止"],
         url: "https://maohsince1966-source.github.io/muscle-matching/",
-        hasKokushi: true
+        hasKokushi: true,
+        kokushiCount: 63
       },
       {
         id: "neural-pathway-puzzle",
-        subject: "解剖学",
+        title: "神経伝導路パズル",
+        category: "anatomy",
         icon: "🧠",
-        title: "神経伝導路 パズル（全14経路）",
-        subtitle: "Step1〜5の順番と「交差する場所」をパズルで完全定着。",
-        tags: ["順番パズル", "交差判定"],
+        description: "錐体路・外側脊髄視床路・後索路の順番と交叉位置をパズルで完全定着。脊髄横断面図解付き。",
+        tags: ["6ルート", "交叉チェック", "脊髄横断面"],
         url: "https://maohsince1966-source.github.io/nerve-matching/",
-        hasKokushi: true
+        hasKokushi: true,
+        kokushiCount: 19
       },
       {
-        id: "cranial-nerves-master",
-        subject: "解剖学",
+        id: "cranial-nerves",
+        title: "脳神経12対マスター",
+        category: "anatomy",
         icon: "👁️",
-        title: "脳神経12対 マスター",
-        subtitle: "番号・名称・機能・通過孔・障害症状＋特徴別集めチャレンジ。",
-        tags: ["マッチング", "集めチャレンジ", "まとめ表"],
+        description: "Ⅰ嗅神経〜Ⅻ舌下神経の名称・機能（運動/感覚/副交感）・頭蓋底の通過孔を徹底暗記。",
+        tags: ["Ⅰ〜Ⅻ", "機能分類", "通過孔"],
         url: "https://maohsince1966-source.github.io/cranial_nerve/",
         hasKokushi: false
       },
       {
-        id: "hormone-learning",
-        subject: "生理学",
+        id: "dermatome-asia28",
+        title: "デルマトーム・ASIA 28 マスター",
+        category: "anatomy",
+        icon: "🧍",
+        description: "ASIA 28感覚キーポイントに完全準拠。SVG人体マップタップ・マッチング・国試ひっかけ仕分けで視覚定着。",
+        tags: ["ASIA 28", "人体マップ", "国試ひっかけ"],
+        url: "",
+        hasKokushi: false,
+        isNew: true
+      },
+      {
+        id: "hormone-master",
+        title: "内分泌・ホルモン マスター",
+        category: "physiology",
         icon: "🧪",
-        title: "内分泌・ホルモン学習（全27種）",
-        subtitle: "主要27ホルモンの分泌器官・作用・疾患＋器官別3つ集め。",
-        tags: ["マッチング", "3つ集め"],
+        description: "視床下部・下垂体・甲状腺・副腎・膵臓などの分泌器官、標的器官、作用をマッチングで整理。",
+        tags: ["分泌器官", "作用", "フィードバック"],
         url: "https://maohsince1966-source.github.io/hormone/",
         hasKokushi: false
       },
       {
-        id: "autonomic-nervous-system",
-        subject: "生理学",
-        icon: "⚡",
-        title: "自律神経 2択仕分け（全32問）",
-        subtitle: "交感 vs 副交感の反応をテンポよく2択仕分け＋国試ひっかけ10問。",
-        tags: ["2択仕分け", "国試ひっかけ", "まとめ表"],
+        id: "autonomic-nerve",
+        title: "自律神経（交感・副交感）マスター",
+        category: "physiology",
+        icon: "⚖️",
+        description: "交感神経と副交感神経の臓器別作用をテンポの良い2択スピード仕分けで反射的にマスター。",
+        tags: ["2択仕分け", "臓器別作用", "二重支配"],
         url: "https://maohsince1966-source.github.io/autonomic_nerve/",
         hasKokushi: false
       },
       {
-        id: "digestion-absorption-master",
-        subject: "生理学",
+        id: "digestive-enzyme",
+        title: "消化酵素と吸収マスター（全22項目）",
+        category: "physiology",
         icon: "🍽️",
-        title: "消化酵素と吸収 マスター（全22項目）",
-        subtitle: "消化酵素・分泌液・分解産物・吸収経路＋3つ集めチャレンジ。",
-        tags: ["マッチング", "3つ集め", "まとめ表"],
+        description: "消化酵素・分泌液・分解産物・吸収ルート（門脈/リンパ管）をマッチングと3つ集めで完全網羅。",
+        tags: ["全22項目", "3大栄養素", "吸収経路"],
         url: "https://maohsince1966-source.github.io/digestive_enzymes/",
         hasKokushi: false
       },
       {
-        id: "muscle-nerve-fiber-master",
-        subject: "生理学",
-        icon: "🧬",
+        id: "muscle-nerve-fiber",
         title: "筋線維・神経線維 マスター",
-        subtitle: "タイプⅠ/Ⅱbの2択仕分け・太い速い順パズル（無髄判定）・機能マッチ。",
-        tags: ["2択仕分け", "順番パズル", "まとめ表"],
+        category: "physiology",
+        icon: "🧬",
+        description: "タイプⅠ/Ⅱa/Ⅱbの2択仕分けと、Aα〜C・Ⅰa〜Ⅳ群の太い速い順パズル（無髄チェック付き）。",
+        tags: ["赤筋/白筋", "太い速い順", "無髄判定"],
         url: "https://maohsince1966-source.github.io/muscle_nerve_fiber/",
         hasKokushi: false
       },
       {
         id: "gait-master",
-        subject: "運動学",
+        title: "正常・異常歩行マスター",
+        category: "kinesiology",
         icon: "🚶",
-        title: "正常・異常歩行 マスター",
-        subtitle: "正常歩行8相パズル・筋活動・間欠性跛行を含む異常歩行11種。",
-        tags: ["8相パズル", "マッチング"],
+        description: "歩行周期8相パズル、正常・異常歩行マッチングに加え、SVG棒人間のコマ送り・筋活動マッピング図鑑を収録。",
+        tags: ["8相パズル", "異常歩行", "コマ送り図鑑"],
         url: "https://maohsince1966-source.github.io/gait/",
-        hasKokushi: true
+        hasKokushi: true,
+        kokushiCount: 20
       }
 
       /* =====================================================================
-       * ▼ 新規アプリ追加用テンプレート（カンマを付けて貼り付けてください）
+       * ▼ 新規アプリ追加用コピペテンプレート（直前の } の後ろにカンマを付けて追加）
        * =====================================================================
       ,{
-        id: "new-app-id",
-        subject: "解剖学", // "解剖学" | "生理学" | "運動学"
-        icon: "📘",
-        title: "新しいアプリ名",
-        subtitle: "アプリの短い説明文をここに入力。",
-        tags: ["マッチング", "弱点復習"],
-        url: "https://maohsince1966-source.github.io/new-app/",
-        hasKokushi: false // 国試過去問モード追加後に true に変更
+        id: "rom-master",
+        title: "ROM（参考可動域）マスター",
+        category: "kinesiology", // 'anatomy' | 'physiology' | 'kinesiology'
+        icon: "📐",
+        description: "上肢・下肢・体幹の参考可動域角度、基本軸・移動軸をスピードマッチングで完全攻略。",
+        tags: ["参考可動域", "基本軸・移動軸", "角度暗記"],
+        url: "https://your-account.github.io/rom-master/",
+        hasKokushi: false,
+        kokushiCount: 0, // hasKokushi: true のとき問題数を指定（任意）
+        isNew: true      // 新着バッジを表示したいとき true（任意）
       }
       */
     ];
 
     // =========================================================================
-    // 状態管理 & localStorage
+    // 定数・状態管理・localStorage（キー名: ot_study_portal_v1）
     // =========================================================================
-    const STORAGE_FAV_KEY = "ot_portal_favorites_v1";
-    const STORAGE_STATS_KEY = "ot_portal_study_stats_v1";
+    const STORAGE_KEY = "ot_study_portal_v1";
 
-    let activeFilter = "すべて"; // "すべて" | "解剖学" | "生理学" | "運動学" | "お気に入り"
+    const CATEGORY_META = {
+      anatomy: { label: "解剖学", cls: "anatomy" },
+      physiology: { label: "生理学", cls: "physiology" },
+      kinesiology: { label: "運動学", cls: "kinesiology" }
+    };
+
+    let activeFilter = "all"; // 'all' | 'anatomy' | 'physiology' | 'kinesiology' | 'favorites' | 'kokushi'
     let searchQuery = "";
     let currentRecommendedApp = null;
     let toastTimer = null;
 
-    function getFavorites() {
+    function loadPortalData() {
+      const fallback = {
+        favorites: [],
+        counts: {},
+        lastStudied: {},
+        totalSessions: 0
+      };
       try {
-        const parsed = JSON.parse(localStorage.getItem(STORAGE_FAV_KEY) || "[]");
-        return Array.isArray(parsed) ? parsed : [];
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (!raw || typeof raw !== "object") return fallback;
+        return {
+          favorites: Array.isArray(raw.favorites) ? raw.favorites : [],
+          counts: (raw.counts && typeof raw.counts === "object") ? raw.counts : {},
+          lastStudied: (raw.lastStudied && typeof raw.lastStudied === "object") ? raw.lastStudied : {},
+          totalSessions: typeof raw.totalSessions === "number" ? raw.totalSessions : 0
+        };
       } catch (e) {
-        return [];
+        return fallback;
       }
     }
 
-    function saveFavorites(ids) {
+    function savePortalData(data) {
       try {
-        localStorage.setItem(STORAGE_FAV_KEY, JSON.stringify([...new Set(ids)]));
-      } catch (e) {}
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          favorites: [...new Set(data.favorites)],
+          counts: data.counts,
+          lastStudied: data.lastStudied,
+          totalSessions: data.totalSessions
+        }));
+      } catch (e) {
+        // プライベートブラウズ等で保存できない場合は無視して動作継続
+      }
     }
 
     function toggleFavorite(appId) {
-      const favs = getFavorites();
-      if (favs.includes(appId)) {
-        saveFavorites(favs.filter(id => id !== appId));
+      const data = loadPortalData();
+      if (data.favorites.includes(appId)) {
+        data.favorites = data.favorites.filter(id => id !== appId);
         showToast("お気に入りから外しました");
       } else {
-        favs.push(appId);
-        saveFavorites(favs);
-        showToast("★ お気に入りに追加しました");
+        data.favorites.push(appId);
+        showToast("★ お気に入りに登録しました");
       }
+      savePortalData(data);
       renderAll();
     }
 
-    function getStudyStats() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_STATS_KEY) || "{}");
-      } catch (e) {
-        return {};
-      }
-    }
-
     function recordStudy(appId) {
-      const stats = getStudyStats();
+      const data = loadPortalData();
       const now = new Date();
       const dateStr = `${now.getMonth() + 1}/${now.getDate()}`;
-      const prev = stats[appId] || { count: 0, lastDate: "" };
-      stats[appId] = {
-        count: prev.count + 1,
-        lastDate: dateStr
-      };
-      try {
-        localStorage.setItem(STORAGE_STATS_KEY, JSON.stringify(stats));
-      } catch (e) {}
-    }
-
-    function getSubjectClass(subject) {
-      if (subject === "解剖学") return "anatomy";
-      if (subject === "生理学") return "physiology";
-      return "kinesiology";
+      data.counts[appId] = (data.counts[appId] || 0) + 1;
+      data.lastStudied[appId] = dateStr;
+      data.totalSessions = (data.totalSessions || 0) + 1;
+      savePortalData(data);
     }
 
     // =========================================================================
-    // トースト・モーダル制御
+    // トースト＆モーダル制御
     // =========================================================================
     function showToast(msg) {
       const el = document.getElementById("toast");
@@ -922,7 +1003,7 @@
       if (toastTimer) clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         el.classList.remove("show");
-      }, 2600);
+      }, 2400);
     }
 
     function openModal(id) {
@@ -937,57 +1018,77 @@
     // アプリ起動処理
     // =========================================================================
     function launchApp(app) {
-      if (!app.url || app.url.trim() === "") {
-        showToast("準備中：URLを設定してください");
+      const url = (app.url || "").trim();
+      if (!url) {
+        showToast("準備中（URL未設定）です");
         return;
       }
       recordStudy(app.id);
       renderAll();
-      window.open(app.url, "_blank", "noopener,noreferrer");
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function buildKokushiBadgeHtml(app) {
+      if (!app.hasKokushi) return "";
+      const label = (typeof app.kokushiCount === "number" && app.kokushiCount > 0)
+        ? `🎓 国試 ${app.kokushiCount}問`
+        : "🎓 国試過去問あり";
+      return `<span class="kokushi-badge">${label}</span>`;
     }
 
     // =========================================================================
     // 画面描画
     // =========================================================================
-    function renderFilterTabs() {
-      const favs = getFavorites();
-      const tabs = [
-        { key: "すべて", label: "すべて", count: APPS.length },
-        { key: "解剖学", label: "解剖学", count: APPS.filter(a => a.subject === "解剖学").length },
-        { key: "生理学", label: "生理学", count: APPS.filter(a => a.subject === "生理学").length },
-        { key: "運動学", label: "運動学", count: APPS.filter(a => a.subject === "運動学").length },
-        { key: "お気に入り", label: "★ お気に入り", count: APPS.filter(a => favs.includes(a.id)).length }
+    function renderStats(data) {
+      const totalApps = APPS.length;
+      const kokushiApps = APPS.filter(a => a.hasKokushi).length;
+      document.getElementById("statTotalApps").textContent = `全${totalApps}アプリ`;
+      document.getElementById("statKokushiApps").textContent = `${kokushiApps}本`;
+      document.getElementById("statTotalSessions").textContent = `${data.totalSessions}回`;
+    }
+
+    function renderFilterChips(data) {
+      const favSet = new Set(data.favorites);
+      const chips = [
+        { key: "all", label: "すべて", count: APPS.length },
+        { key: "anatomy", label: "解剖学", count: APPS.filter(a => a.category === "anatomy").length },
+        { key: "physiology", label: "生理学", count: APPS.filter(a => a.category === "physiology").length },
+        { key: "kinesiology", label: "運動学", count: APPS.filter(a => a.category === "kinesiology").length },
+        { key: "favorites", label: "★ お気に入り", count: APPS.filter(a => favSet.has(a.id)).length },
+        { key: "kokushi", label: "🎓 国試あり", count: APPS.filter(a => a.hasKokushi).length, extraCls: "chip-kokushi" }
       ];
 
-      const container = document.getElementById("filterTabs");
+      const container = document.getElementById("filterChips");
       container.innerHTML = "";
-      tabs.forEach(t => {
+      chips.forEach(chip => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "filter-tab" + (activeFilter === t.key ? " active" : "");
-        btn.innerHTML = `<span>${t.label}</span><span class="count-badge">${t.count}</span>`;
+        btn.className = `filter-chip${chip.extraCls ? " " + chip.extraCls : ""}${activeFilter === chip.key ? " active" : ""}`;
+        btn.innerHTML = `<span>${chip.label}</span><span class="chip-count">${chip.count}</span>`;
         btn.onclick = () => {
-          activeFilter = t.key;
+          activeFilter = chip.key;
           renderAll();
         };
         container.appendChild(btn);
       });
     }
 
-    function renderAppList() {
-      const favs = getFavorites();
-      const stats = getStudyStats();
+    function renderAppList(data) {
+      const favSet = new Set(data.favorites);
       const q = searchQuery.trim().toLowerCase();
 
       const filtered = APPS.filter(app => {
-        if (activeFilter === "お気に入り") {
-          if (!favs.includes(app.id)) return false;
-        } else if (activeFilter !== "すべて") {
-          if (app.subject !== activeFilter) return false;
+        if (activeFilter === "favorites") {
+          if (!favSet.has(app.id)) return false;
+        } else if (activeFilter === "kokushi") {
+          if (!app.hasKokushi) return false;
+        } else if (activeFilter !== "all") {
+          if (app.category !== activeFilter) return false;
         }
 
         if (q) {
-          const hay = `${app.title} ${app.subtitle} ${app.subject} ${app.tags.join(" ")}`.toLowerCase();
+          const catLabel = (CATEGORY_META[app.category] || {}).label || "";
+          const hay = `${app.title} ${app.description} ${catLabel} ${(app.tags || []).join(" ")}`.toLowerCase();
           if (!hay.includes(q)) return false;
         }
         return true;
@@ -997,39 +1098,40 @@
       listEl.innerHTML = "";
 
       if (filtered.length === 0) {
-        const emptyMsg = activeFilter === "お気に入り"
-          ? "お気に入り登録されたアプリがまだありません。<br>カードの「☆ お気に入り」から登録できます。"
-          : "条件に一致するアプリが見つかりませんでした。";
-        listEl.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
+        let msg = "条件に一致するアプリが見つかりませんでした。";
+        if (activeFilter === "favorites") {
+          msg = "お気に入り登録されたアプリがまだありません。<br>カードの「☆ お気に入り」ボタンから登録できます。";
+        }
+        listEl.innerHTML = `<div class="empty-state">${msg}</div>`;
         return;
       }
 
       filtered.forEach(app => {
-        const subjClass = getSubjectClass(app.subject);
-        const isFav = favs.includes(app.id);
-        const st = stats[app.id];
-        const isReady = Boolean(app.url && app.url.trim() !== "");
+        const cat = CATEGORY_META[app.category] || { label: "その他", cls: "anatomy" };
+        const isFav = favSet.has(app.id);
+        const count = data.counts[app.id] || 0;
+        const lastDate = data.lastStudied[app.id] || "";
+        const isReady = Boolean((app.url || "").trim());
 
-        const card = document.createElement("article");
-        card.className = `app-card subject-${subjClass}`;
-        card.id = `card-${app.id}`;
-
-        const kokushiBadgeHtml = app.hasKokushi
-          ? `<span class="kokushi-badge">🎓 国試過去問あり</span>`
-          : "";
-
-        const tagsHtml = app.tags
-          .map(tag => `<span class="mode-tag">${tag}</span>`)
+        const newBadgeHtml = app.isNew ? `<span class="new-badge">NEW</span>` : "";
+        const kokushiBadgeHtml = buildKokushiBadgeHtml(app);
+        const tagsHtml = (app.tags || [])
+          .map(tag => `<span class="tag-pill">#${tag}</span>`)
           .join("");
 
-        const statHtml = st && st.count > 0
-          ? `<span class="study-stat has-history">学習 ${st.count}回・最終 ${st.lastDate}</span>`
-          : `<span class="study-stat">未学習</span>`;
+        const historyHtml = count > 0
+          ? `<span class="history-text studied">学習 ${count}回${lastDate ? `・最終 ${lastDate}` : ""}</span>`
+          : `<span class="history-text">未学習</span>`;
+
+        const card = document.createElement("article");
+        card.className = `app-card cat-${cat.cls}`;
+        card.id = `card-${app.id}`;
 
         card.innerHTML = `
           <div class="card-top">
             <div class="badge-row">
-              <span class="subject-badge ${subjClass}">${app.subject}</span>
+              <span class="cat-badge ${cat.cls}">${cat.label}</span>
+              ${newBadgeHtml}
               ${kokushiBadgeHtml}
             </div>
             <button class="fav-btn ${isFav ? "active" : ""}" type="button" aria-label="お気に入り切替">
@@ -1040,12 +1142,12 @@
             <span class="app-icon">${app.icon}</span>
             <h2 class="app-title">${app.title}</h2>
           </div>
-          <p class="app-subtitle">${app.subtitle}</p>
+          <p class="app-desc">${app.description}</p>
           <div class="tag-row">${tagsHtml}</div>
           <div class="card-footer">
-            ${statHtml}
-            <button class="open-btn ${isReady ? "" : "pending"}" type="button">
-              ${isReady ? "開く ▶" : "準備中"}
+            ${historyHtml}
+            <button class="action-btn" type="button" ${isReady ? "" : "disabled"}>
+              ${isReady ? "学習をはじめる ▶" : "準備中（URL未設定）"}
             </button>
           </div>
         `;
@@ -1055,7 +1157,7 @@
           toggleFavorite(app.id);
         };
 
-        card.querySelector(".open-btn").onclick = () => {
+        card.querySelector(".action-btn").onclick = () => {
           launchApp(app);
         };
 
@@ -1063,52 +1165,50 @@
       });
     }
 
-    function renderFooter() {
-      const stats = getStudyStats();
-      let totalCount = 0;
-      Object.values(stats).forEach(s => {
-        if (s && typeof s.count === "number") totalCount += s.count;
-      });
-      document.getElementById("totalAppsCount").textContent = String(APPS.length);
-      document.getElementById("totalStudyCount").textContent = String(totalCount);
-    }
-
     function renderAll() {
-      renderFilterTabs();
-      renderAppList();
-      renderFooter();
+      const data = loadPortalData();
+      renderStats(data);
+      renderFilterChips(data);
+      renderAppList(data);
     }
 
     // =========================================================================
-    // ランダムおすすめ選出
+    // 「🎲 今日の3分おすすめ」ランダム選出
     // =========================================================================
     function pickRandomApp() {
       if (APPS.length === 0) return;
-      const app = APPS[Math.floor(Math.random() * APPS.length)];
+
+      // 連続で同じアプリが出にくいように抽選
+      let pool = APPS;
+      if (currentRecommendedApp && APPS.length > 1) {
+        pool = APPS.filter(a => a.id !== currentRecommendedApp.id);
+      }
+      const app = pool[Math.floor(Math.random() * pool.length)];
       currentRecommendedApp = app;
 
-      const subjClass = getSubjectClass(app.subject);
-      const kokushiHtml = app.hasKokushi
-        ? `<span class="kokushi-badge">🎓 国試過去問あり</span>`
-        : "";
+      const cat = CATEGORY_META[app.category] || { label: "その他", cls: "anatomy" };
+      const newHtml = app.isNew ? `<span class="new-badge">NEW</span>` : "";
+      const kokushiHtml = buildKokushiBadgeHtml(app);
+      const isReady = Boolean((app.url || "").trim());
 
       document.getElementById("recPreview").innerHTML = `
         <div class="badge-row">
-          <span class="subject-badge ${subjClass}">${app.subject}</span>
+          <span class="cat-badge ${cat.cls}">${cat.label}</span>
+          ${newHtml}
           ${kokushiHtml}
         </div>
-        <div class="card-title-row" style="margin-top:4px;">
+        <div class="card-title-row" style="margin-top:2px;">
           <span class="app-icon">${app.icon}</span>
-          <strong style="font-size:1.05rem;">${app.title}</strong>
+          <strong style="font-size:1.04rem; line-height:1.3;">${app.title}</strong>
         </div>
-        <p style="margin:4px 0 0; font-size:0.82rem; color:#334155;">${app.subtitle}</p>
+        <p style="margin:0; font-size:0.82rem; color:var(--text-sub); line-height:1.5;">${app.description}</p>
       `;
 
       const openBtn = document.getElementById("recOpenBtn");
-      const isReady = Boolean(app.url && app.url.trim() !== "");
-      openBtn.textContent = isReady ? "このアプリを開く ▶" : "準備中（URL未設定）";
+      openBtn.disabled = !isReady;
+      openBtn.textContent = isReady ? "すぐ開く ▶" : "準備中（URL未設定）";
 
-      // 画面上の該当カードをハイライト
+      // 一覧上の該当カードを軽くハイライト
       const targetCard = document.getElementById(`card-${app.id}`);
       if (targetCard) {
         targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1120,14 +1220,13 @@
     }
 
     // =========================================================================
-    // イベント登録
+    // イベントリスナー登録・初期化
     // =========================================================================
     document.getElementById("searchInput").addEventListener("input", (e) => {
       searchQuery = e.target.value;
-      renderAppList();
+      renderAppList(loadPortalData());
     });
 
-    document.getElementById("openGuideBtn").onclick = () => openModal("guideModal");
     document.getElementById("randomPickBtn").onclick = pickRandomApp;
     document.getElementById("recRerollBtn").onclick = pickRandomApp;
     document.getElementById("recOpenBtn").onclick = () => {
@@ -1136,10 +1235,12 @@
       launchApp(currentRecommendedApp);
     };
 
-    // モーダル閉じる処理（ボタン＆背景クリック）
+    document.getElementById("openGuideBtn").onclick = () => openModal("guideModal");
+
     document.querySelectorAll("[data-close-modal]").forEach(btn => {
       btn.onclick = () => closeModal(btn.dataset.closeModal);
     });
+
     document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
       backdrop.onclick = (e) => {
         if (e.target === backdrop) backdrop.classList.remove("open");
